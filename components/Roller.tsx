@@ -28,8 +28,8 @@ const Side = ({
 }) => <div className={cn("flex flex-col gap-2", className)}>{children}</div>;
 
 export default function Roller() {
-  const [attackers, setAttackers] = useState(0);
-  const [defenders, setDefenders] = useState(0);
+  const [attackers, setAttackers] = useState<number | null>(null);
+  const [defenders, setDefenders] = useState<number | null>(null);
   const [output, setOutput] = useState<number[]>([]);
   const [rolls, setRolls] = useState<
     {
@@ -67,6 +67,8 @@ export default function Roller() {
   };
 
   const blitz = () => {
+    if (!attackers || !defenders) return;
+
     const r = [] as typeof rolls;
     let o = roll(attackers, defenders, r);
     while (o[0] > 1 && o[1] > 0) {
@@ -79,7 +81,7 @@ export default function Roller() {
     setRolls(r);
   };
 
-  const canAttack = attackers > 1 && defenders > 0;
+  const canAttack = (attackers ?? 0) > 1 && (defenders ?? 0) > 0;
 
   const [animate, setAnimate] = useState(false);
 
@@ -99,18 +101,17 @@ export default function Roller() {
             <h3>Attacker</h3>
             <Input
               type="number"
-              value={attackers}
-              onChange={(e) => setAttackers(Number(e.target.value) ?? 0)}
+              value={attackers !== null ? attackers : ""}
+              onChange={(e) => setAttackers(Number(e.target.value) ?? null)}
             />
           </Side>
           <Side className="items-end">
             <h3>Defender</h3>
             <Input
               type="number"
-              placeholder="0"
               className="text-right"
-              value={defenders}
-              onChange={(e) => setDefenders(Number(e.target.value) ?? 0)}
+              value={defenders !== null ? defenders : ""}
+              onChange={(e) => setDefenders(Number(e.target.value) ?? null)}
             />
           </Side>
         </Grid>
@@ -119,6 +120,8 @@ export default function Roller() {
             variant="outline"
             disabled={!canAttack}
             onClick={() => {
+              if (!attackers || !defenders) return;
+
               const r = [] as typeof rolls;
               const o = roll(attackers, defenders, r);
               setAttackers(o[0]);
