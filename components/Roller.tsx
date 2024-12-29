@@ -75,8 +75,8 @@ export default function Roller() {
       o = roll(o[0], o[1], r);
     }
 
-    setAttackers(o[0]);
-    setDefenders(o[1]);
+    setAttackers(o[0] > 0 ? o[0] : null);
+    setDefenders(o[1] > 0 ? o[1] : null);
     setOutput(o);
     setRolls(r);
   };
@@ -124,8 +124,8 @@ export default function Roller() {
 
               const r = [] as typeof rolls;
               const o = roll(attackers, defenders, r);
-              setAttackers(o[0]);
-              setDefenders(o[1]);
+              setAttackers(o[0] > 0 ? o[0] : null);
+              setDefenders(o[1] > 0 ? o[1] : null);
               setOutput(o);
               setRolls(r);
             }}
