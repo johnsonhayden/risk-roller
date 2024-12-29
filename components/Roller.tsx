@@ -247,8 +247,8 @@ export default function Roller() {
           <Button
             variant="ghost"
             onClick={() => {
-              setAttackers(0);
-              setDefenders(0);
+              setAttackers(null);
+              setDefenders(null);
               setOutput([]);
               setRolls([]);
             }}
