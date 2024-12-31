@@ -102,7 +102,10 @@ export default function Roller() {
             <Input
               type="number"
               value={attackers !== null ? attackers : ""}
-              onChange={(e) => setAttackers(Number(e.target.value) ?? null)}
+              onChange={(e) => {
+                if (!e.target.value) return setAttackers(null);
+                setAttackers(Number(e.target.value));
+              }}
             />
           </Side>
           <Side className="items-end">
@@ -111,7 +114,10 @@ export default function Roller() {
               type="number"
               className="text-right"
               value={defenders !== null ? defenders : ""}
-              onChange={(e) => setDefenders(Number(e.target.value) ?? null)}
+              onChange={(e) => {
+                if (!e.target.value) return setDefenders(null);
+                setDefenders(Number(e.target.value));
+              }}
             />
           </Side>
         </Grid>
